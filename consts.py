@@ -1,0 +1,5 @@
+white = (255,255,255)
+black = (0,0,0)
+
+WINDOW_WIDTH = 400
+WINDOW_HEIGHT = 200
