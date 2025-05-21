@@ -1,6 +1,6 @@
 import pygame
 import pygame_gui
-
+import random
 from consts import *
 from ground import Ground 
 from player import Player
@@ -67,9 +67,7 @@ def game():
                 text="Restart",
                 manager=ui_manager)  
     restart_button.hide()  
-    
-    enemies_manager.update()
-    enemies_manager.draw(screen)
+
 
     
     quit = False
@@ -105,16 +103,12 @@ def game():
         if (not game_over):
             ground.update()
             player.update()
-            enemies_manager.update()
+            enemies_manager.update(time_delta)
             current_frame += 1 
             if current_frame > SPEED_UPGRADE_FRAME:
-            #     ground.speed += 1
-            #     enemies_manager.ground_speed += 1
-                # enemies_manager.min_wait_frames -= 2
-                # enemies_manager.max_wait_frames -= 2 
-                # if enemies_manager.min_wait_frames < 2:
-                #     enemies_manager.min_wait_frames = 2
-                
+                ground.speed += 1
+                enemies_manager.adjust_spawn_rate(ground.speed)
+    
                 current_frame = 0
                 
             enemy = collide(player,enemies_manager)
