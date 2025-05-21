@@ -11,6 +11,7 @@ pygame.font.init()
 pygame.mixer.init()
 
 ui_manager = pygame_gui.UIManager((WINDOW_WIDTH, WINDOW_HEIGHT))
+screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 
 try:
     # Make sure this path is correct for your sound file
@@ -61,11 +62,44 @@ enemies_manager = EnemiesManager(ground_speed,font)
 def init_game_state():
     score.reset()    
     enemies_manager.reset()
+    set_rps_buttons_visibility(True)
     
+def set_rps_buttons_visibility(visible):
+    if visible:
+        rock_button.show()
+        paper_button.show()
+        scissors_button.show()
+    else:
+        rock_button.hide()
+        paper_button.hide()
+        scissors_button.hide()
+            
+button_width = (WINDOW_WIDTH - 40) // 3 # 20px padding on each side, 20px between
+button_height = 50
+button_y = WINDOW_HEIGHT - button_height - 10 # 10px from bottom
+
+rock_button = pygame_gui.elements.UIButton(
+    relative_rect=pygame.Rect((10, button_y), (button_width, button_height)),
+    text='ROCK',
+    manager=ui_manager,
+    object_id='#rock_button' # Unique ID for styling if needed
+)
+paper_button = pygame_gui.elements.UIButton(
+    relative_rect=pygame.Rect((20 + button_width, button_y), (button_width, button_height)),
+    text='PAPER',
+    manager=ui_manager,
+    object_id='#paper_button'
+)
+scissors_button = pygame_gui.elements.UIButton(
+    relative_rect=pygame.Rect((30 + 2 * button_width, button_y), (button_width, button_height)),
+    text='SCISSORS',
+    manager=ui_manager,
+    object_id='#scissors_button'
+)
+
 def game():
     
     clock = pygame.time.Clock() 
-    screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
     pygame.display.set_caption("Rock Paper Scissor Infinite Runner")
     ground.draw(screen)
     ground.update()
@@ -83,6 +117,8 @@ def game():
                 manager=ui_manager)  
     restart_button.hide()  
 
+   
+    
 
     
     quit = False
@@ -100,6 +136,20 @@ def game():
                     player.change("P")
                 elif event.key == pygame.K_d  or event.key == pygame.K_RIGHT:
                     player.change("S")
+            
+            if event.type == pygame_gui.UI_BUTTON_PRESSED:
+                if event.ui_element == restart_button:
+                    if game_over:
+                        init_game_state()
+                        print("Game Restarted!")
+                elif not game_over: # Only allow RPS button presses if game is not over
+                    if event.ui_element == rock_button:
+                        player.change("R")
+                    elif event.ui_element == paper_button:
+                        player.change("P")
+                    elif event.ui_element == scissors_button:
+                        player.change("S")
+            
             ui_manager.process_events(event)
             
             if event.type == pygame_gui.UI_BUTTON_PRESSED:
@@ -134,6 +184,7 @@ def game():
                 winner = "Player" if god_mode else duel(player,enemy)
                 if winner == "Enemy":
                     game_over = True
+                    set_rps_buttons_visibility(False)
                     enemy.draw(screen)
                 else:
                     if winner == "Player":
