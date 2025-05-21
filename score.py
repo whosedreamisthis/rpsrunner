@@ -29,6 +29,10 @@ class Score:
         self.text_surface = self.font.render(f"score: {self.value:04d}  high: {self.high_score:04d}", True, green) 
         self.save_high_score()
 
+    def reset(self):
+        self.value = 0
+        self.text_surface = self.font.render(f"score: {self.value:04d}  high: {self.high_score:04d}", True, green) 
+
     def save_high_score(self):
         with open("high_score.txt", "w") as file:
             file.write(str(self.high_score))

@@ -3,7 +3,7 @@ from consts import *
 import random
 class Enemy:
     def __init__(self,font,enemy_type):
-        self.x = WINDOW_WIDTH# + random.randrange(10,200)
+        self.x = WINDOW_WIDTH
         self.y = GROUND_HEIGHT
         
         self.type = enemy_type

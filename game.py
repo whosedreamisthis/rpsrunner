@@ -1,4 +1,6 @@
 import pygame
+import pygame_gui
+
 from consts import *
 from ground import Ground 
 from player import Player
@@ -7,7 +9,7 @@ from score import Score
 
 pygame.init()
 pygame.font.init()
-
+ui_manager = pygame_gui.UIManager((WINDOW_WIDTH, WINDOW_HEIGHT))
 
 def collide(player,enemiesManager):
     enemy = enemiesManager.get_first_enemy()
@@ -29,32 +31,43 @@ def duel(player, enemy):
         return "Enemy"
     
     return "Player"
-        
+  
+score = Score()
+try:
+    font = pygame.font.Font("freesansbold.ttf", 32) # Using a common free font
+except FileNotFoundError:
+# Fallback to default font if 'freesansbold.ttf' is not found
+    font = pygame.font.SysFont(None, 32)
+    
+ground = Ground()
+ground_speed = ground.get_speed()
+
+enemies_manager = EnemiesManager(ground_speed,font)
+
+def init_game_state():
+    score.reset()    
+    enemies_manager.reset()
     
 def game():
     
     clock = pygame.time.Clock() 
     screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
     pygame.display.set_caption("Rock Paper Scissor Infinite Runner")
-    ground = Ground()
     ground.draw(screen)
     ground.update()
     
-    ground_speed = ground.get_speed()
     
-    try:
-        font = pygame.font.Font("freesansbold.ttf", 32) # Using a common free font
-    except FileNotFoundError:
-    # Fallback to default font if 'freesansbold.ttf' is not found
-        font = pygame.font.SysFont(None, 32)
+
     
     player = Player(font)
     player.update()
     player.draw(screen)
     
-    score = Score()
-    
-    enemies_manager = EnemiesManager(ground_speed,font)
+    restart_button = pygame_gui.elements.UIButton(
+                   relative_rect=pygame.Rect((WINDOW_WIDTH//2-100, WINDOW_HEIGHT//2), (200, 50)),
+                text="Restart",
+                manager=ui_manager)  
+    restart_button.hide()  
     
     enemies_manager.update()
     enemies_manager.draw(screen)
@@ -62,6 +75,7 @@ def game():
     
     quit = False
     game_over = False
+    time_delta = clock.tick(60) / 1000.0
     while not quit:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -73,6 +87,15 @@ def game():
                     player.change("P")
                 elif event.key == pygame.K_d  or event.key == pygame.K_RIGHT:
                     player.change("S")
+            ui_manager.process_events(event)
+            
+            if event.type == pygame_gui.UI_BUTTON_PRESSED:
+                if event.ui_element == restart_button:
+                    if game_over: # Ensure restart only happens if game is actually over
+                        init_game_state()
+                        print("Game Restarted!")
+                        game_over = False
+                        restart_button.hide()
                     
                     
                 
@@ -98,14 +121,23 @@ def game():
                         score.add_score(1)
                     enemies_manager.pop_first_enemy()
                     del enemy
-                    
-                    
+        
+        else:
+            font_large = pygame.font.Font(None, 50)
+            game_over_text = font_large.render("GAME OVER!", True, (155, 155, 155))
+            text_rect = game_over_text.get_rect(center=(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 - 25))
+            screen.blit(game_over_text, text_rect)
+            restart_button.show()
+
+        ui_manager.update(time_delta)           
                 
         ground.draw(screen)
         player.draw(screen)
         enemies_manager.draw(screen)    
         score.draw(screen)
-        pygame.display.update()
+        ui_manager.draw_ui(screen)         
+
+        pygame.display.flip()
         # clock.tick(1) 
         clock.tick(60)
         
