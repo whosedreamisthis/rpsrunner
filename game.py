@@ -2,6 +2,7 @@ import pygame
 from consts import *
 from ground import Ground 
 from player import Player
+from enemies_manager import EnemiesManager
 
 pygame.init()
 pygame.font.init()
@@ -15,6 +16,8 @@ def game():
     ground.draw(screen)
     ground.update()
     
+    ground_speed = ground.get_speed()
+    
     try:
         font = pygame.font.Font("freesansbold.ttf", 32) # Using a common free font
     except FileNotFoundError:
@@ -25,7 +28,10 @@ def game():
     player.update()
     player.draw(screen)
     
-    
+    enemies_manager = EnemiesManager(ground_speed)
+    enemies_manager.spawn_enemy(font)
+    enemies_manager.update()
+    enemies_manager.draw(screen)
     
     quit = False
         
@@ -38,6 +44,8 @@ def game():
         ground.draw(screen)
         player.update()
         player.draw(screen)
+        enemies_manager.update()
+        enemies_manager.draw(screen)
         pygame.display.update()
         # clock.tick(1) 
         clock.tick(60)

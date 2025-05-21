@@ -17,7 +17,7 @@ class Player:
 
 # Center the text on the screen
         x = 30
-        y = 200
+        y = GROUND_HEIGHT
         self.text_rect.center = (x,y)
 
         

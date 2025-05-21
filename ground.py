@@ -20,6 +20,9 @@ class Ground():
         screen.blit(self.ground1, (self.ground1_x,self.ground1_y))
         screen.blit(self.ground2, (self.ground2_x,self.ground2_y))
 
+    def get_speed(self):
+        return self.speed
+    
     def update(self):
         self.ground1_x -= self.speed
         self.ground2_x -= self.speed
