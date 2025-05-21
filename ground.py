@@ -3,11 +3,11 @@ import pygame
 class Ground():
     def __init__(self):
         self.ground_length = 1202
-        self.ground1 = pygame.image.load("assets/ground.png")
+        self.ground1 = pygame.image.load("assets/images/ground.png")
         self.ground1_x = 0
         self.ground1_y = 200
         
-        self.ground2 = pygame.image.load("assets/ground.png")
+        self.ground2 = pygame.image.load("assets/images/ground.png")
         self.ground2_x = self.ground1_x + self.ground_length
         self.ground2_y = self.ground1_y
         

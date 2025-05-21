@@ -1,8 +1,8 @@
 from enemy import Enemy
 import random
 from consts import *
-min_wait_frames = 20
-max_wait_frames = 100
+min_wait_frames = 100
+max_wait_frames = 300
 class EnemiesManager:
     def __init__(self,speed,font):
         self.enemies = []
@@ -11,7 +11,7 @@ class EnemiesManager:
         self.font = font
         
     def spawn_enemy(self):
-        enemy_type = random.choice(ENEMY_TYPES)
+        enemy_type ="R"#random.choice(ENEMY_TYPES)
 
         new_enemy = Enemy(self.font,enemy_type)
         self.enemies.append(new_enemy)

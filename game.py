@@ -3,6 +3,7 @@ from consts import *
 from ground import Ground 
 from player import Player
 from enemies_manager import EnemiesManager
+from score import Score
 
 pygame.init()
 pygame.font.init()
@@ -10,7 +11,7 @@ pygame.font.init()
 
 def collide(player,enemiesManager):
     enemy = enemiesManager.get_first_enemy()
-    if enemy.get_x_pos() <= 50:
+    if enemy is not None and enemy.get_x_pos() <= 50:
         return enemy 
     
     return None   
@@ -31,6 +32,7 @@ def duel(player, enemy):
         
     
 def game():
+    
     clock = pygame.time.Clock() 
     screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
     pygame.display.set_caption("Rock Paper Scissor Infinite Runner")
@@ -49,6 +51,8 @@ def game():
     player = Player(font)
     player.update()
     player.draw(screen)
+    
+    score = Score()
     
     enemies_manager = EnemiesManager(ground_speed,font)
     
@@ -90,6 +94,8 @@ def game():
                     game_over = True
                     enemy.draw(screen)
                 else:
+                    if winner == "Player":
+                        score.add_score(1)
                     enemies_manager.pop_first_enemy()
                     del enemy
                     
@@ -98,6 +104,7 @@ def game():
         ground.draw(screen)
         player.draw(screen)
         enemies_manager.draw(screen)    
+        score.draw(screen)
         pygame.display.update()
         # clock.tick(1) 
         clock.tick(60)
