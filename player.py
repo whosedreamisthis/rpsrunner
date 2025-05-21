@@ -1,11 +1,10 @@
 import pygame
 import random
 from consts import *
-choices = ["R","P","S","N"]
 
 class Player:
     def __init__(self,font):
-        self.type = "N"
+        self.type = random.choice(ENEMY_TYPES)
         self.font = font
         self.text_surface = font.render(self.type, True, green) # Red text
         
