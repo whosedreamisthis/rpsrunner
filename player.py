@@ -6,8 +6,9 @@ choices = ["R","P","S","N"]
 class Player:
     def __init__(self,font):
         self.type = "N"
-        
+        self.font = font
         self.text_surface = font.render(self.type, True, green) # Red text
+        
 
 # You can also render text with a background color:
 # text_surface_bg = font.render("Text with Background", True, black, white) # Black text, white background
@@ -20,6 +21,9 @@ class Player:
         y = GROUND_HEIGHT
         self.text_rect.center = (x,y)
 
+    def change(self,new_type):
+        self.type = new_type
+        self.text_surface = self.font.render(self.type, True, green)
     
     def get_pos_x():
         return 30

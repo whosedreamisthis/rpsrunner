@@ -62,6 +62,15 @@ def game():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 quit = True
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_a or event.key == pygame.K_LEFT:
+                    player.change("R")
+                elif event.key == pygame.K_s  or event.key == pygame.K_UP:
+                    player.change("P")
+                elif event.key == pygame.K_d  or event.key == pygame.K_RIGHT:
+                    player.change("S")
+                    
+                    
                 
         
         screen.fill((240,240,240))
