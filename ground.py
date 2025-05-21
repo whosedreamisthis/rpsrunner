@@ -11,7 +11,7 @@ class Ground():
         self.ground2_x = self.ground1_x + self.ground_length
         self.ground2_y = self.ground1_y
         
-        self.speed = 4
+        self.speed = 2
         
     def get_ground_pos(self):
         return (self.ground1_x,self.ground1_y)

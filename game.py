@@ -64,7 +64,7 @@ def game():
     player.draw(screen)
     
     restart_button = pygame_gui.elements.UIButton(
-                   relative_rect=pygame.Rect((WINDOW_WIDTH//2-100, WINDOW_HEIGHT//2), (200, 50)),
+                   relative_rect=pygame.Rect((WINDOW_WIDTH//2-100, WINDOW_HEIGHT//2-25), (200, 50)),
                 text="Restart",
                 manager=ui_manager)  
     restart_button.hide()  
@@ -125,7 +125,7 @@ def game():
         else:
             font_large = pygame.font.Font(None, 50)
             game_over_text = font_large.render("GAME OVER!", True, (155, 155, 155))
-            text_rect = game_over_text.get_rect(center=(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 - 25))
+            text_rect = game_over_text.get_rect(center=(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 - 50))
             screen.blit(game_over_text, text_rect)
             restart_button.show()
 
