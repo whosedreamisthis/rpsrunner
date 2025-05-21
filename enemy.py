@@ -7,7 +7,14 @@ class Enemy:
         self.y = GROUND_HEIGHT
         
         self.type = enemy_type
-        self.text_surface = font.render(self.type, True, black) # Red text
+        if self.type == "R":
+            self.color = rock_color
+        elif self.type == "S":
+            self.color = scissors_color
+        else:
+            self.color = paper_color
+            
+        self.text_surface = font.render(self.type, True, self.color) # Red text
 
 
         self.text_rect = self.text_surface.get_rect()

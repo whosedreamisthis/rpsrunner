@@ -6,7 +6,7 @@ class Player:
     def __init__(self,font):
         self.type = random.choice(ENEMY_TYPES)
         self.font = font
-        self.text_surface = font.render(self.type, True, green) # Red text
+        self.text_surface = font.render(self.type, True, dark_gray) # Red text
         
 
 # You can also render text with a background color:
@@ -22,14 +22,14 @@ class Player:
 
     def change(self,new_type):
         self.type = new_type
-        self.text_surface = self.font.render(self.type, True, green)
+        self.text_surface = self.font.render(self.type, True, dark_gray)
     
     def get_pos_x():
         return 30
     
     def draw(self, screen):
         screen.blit(self.text_surface, self.text_rect)
-    
+            
     def update(self):
         pass
         

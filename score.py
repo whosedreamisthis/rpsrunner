@@ -13,7 +13,7 @@ class Score:
         except FileNotFoundError:
             self.font = pygame.font.SysFont(None, 20)
         self.high_score = self.load_high_score()
-        self.text_surface = self.font.render(f"score: {self.value:04d}  high: {self.high_score:04d}", True, green) 
+        self.text_surface = self.font.render(f"score: {self.value:04d}  high: {self.high_score:04d}", True, dark_gray) 
         self.text_rect = self.text_surface.get_rect()
         self.text_rect.center = (x,y)
 
@@ -26,12 +26,12 @@ class Score:
         if self.value > self.high_score:
             self.high_score = self.value
 
-        self.text_surface = self.font.render(f"score: {self.value:04d}  high: {self.high_score:04d}", True, green) 
+        self.text_surface = self.font.render(f"score: {self.value:04d}  high: {self.high_score:04d}", True, dark_gray) 
         self.save_high_score()
 
     def reset(self):
         self.value = 0
-        self.text_surface = self.font.render(f"score: {self.value:04d}  high: {self.high_score:04d}", True, green) 
+        self.text_surface = self.font.render(f"score: {self.value:04d}  high: {self.high_score:04d}", True, dark_gray) 
 
     def save_high_score(self):
         with open("high_score.txt", "w") as file:

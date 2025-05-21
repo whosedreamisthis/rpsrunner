@@ -6,11 +6,9 @@ from ground import Ground
 from player import Player
 from enemies_manager import EnemiesManager
 from score import Score
-
 pygame.init()
 pygame.font.init()
 ui_manager = pygame_gui.UIManager((WINDOW_WIDTH, WINDOW_HEIGHT))
-
 def collide(player,enemiesManager):
     enemy = enemiesManager.get_first_enemy()
     if enemy is not None and enemy.get_x_pos() <= 50:
@@ -44,6 +42,7 @@ ground_speed = ground.get_speed()
 
 enemies_manager = EnemiesManager(ground_speed,font)
 
+
 def init_game_state():
     score.reset()    
     enemies_manager.reset()
@@ -75,6 +74,7 @@ def game():
     
     quit = False
     game_over = False
+    current_frame = 0
     time_delta = clock.tick(60) / 1000.0
     while not quit:
         for event in pygame.event.get():
@@ -106,13 +106,23 @@ def game():
             ground.update()
             player.update()
             enemies_manager.update()
-            
+            current_frame += 1 
+            if current_frame > SPEED_UPGRADE_FRAME:
+            #     ground.speed += 1
+            #     enemies_manager.ground_speed += 1
+                # enemies_manager.min_wait_frames -= 2
+                # enemies_manager.max_wait_frames -= 2 
+                # if enemies_manager.min_wait_frames < 2:
+                #     enemies_manager.min_wait_frames = 2
+                
+                current_frame = 0
+                
             enemy = collide(player,enemies_manager)
             if (enemy is not None):
                 print("player collided with enemy")
                 
                 
-                winner = duel(player,enemy)
+                winner = "Player" if god_mode else duel(player,enemy)
                 if winner == "Enemy":
                     game_over = True
                     enemy.draw(screen)
