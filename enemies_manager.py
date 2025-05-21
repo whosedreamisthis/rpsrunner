@@ -26,7 +26,7 @@ class EnemiesManager:
 
         # Timer for spawning
         self.time_until_next_spawn = random.uniform(self.min_wait_time, self.max_wait_time)
-        self.current_time_since_last_spawn = 0.0
+        self.current_time_since_last_spawn = self.time_until_next_spawn
 
         self.ground_speed = initial_speed # Current ground speed, updated by game.py
 
@@ -35,7 +35,7 @@ class EnemiesManager:
         self.min_wait_time = self.base_min_spawn_duration
         self.max_wait_time = self.base_max_spawn_duration
         self.time_until_next_spawn = random.uniform(self.min_wait_time, self.max_wait_time)
-        self.current_time_since_last_spawn = 0.0
+        self.current_time_since_last_spawn = self.time_until_next_spawn
         self.ground_speed = self.original_ground_speed # Reset speed for manager
 
 

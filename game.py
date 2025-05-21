@@ -8,7 +8,22 @@ from enemies_manager import EnemiesManager
 from score import Score
 pygame.init()
 pygame.font.init()
+pygame.mixer.init()
+
 ui_manager = pygame_gui.UIManager((WINDOW_WIDTH, WINDOW_HEIGHT))
+
+try:
+    # Make sure this path is correct for your sound file
+    player_win_sound = pygame.mixer.Sound("assets/sounds/coin.wav")
+    enemy_win_sound = pygame.mixer.Sound("assets/sounds/injury.wav")
+    tie_sound = pygame.mixer.Sound("assets/sounds/jump.wav")
+    
+except pygame.error as e:
+    print(f"Could not load sound file: {e}")
+    player_win_sound = None
+    enemy_win_sound = None
+    tie_sound = None
+    
 def collide(player,enemiesManager):
     enemy = enemiesManager.get_first_enemy()
     if enemy is not None and enemy.get_x_pos() <= 50:
@@ -18,16 +33,16 @@ def collide(player,enemiesManager):
 
 def duel(player, enemy):
     if player.type == enemy.type:
+        tie_sound.play()
         return "Tie"
     
     if (player.type == "R" and enemy.type == "P") or \
         (player.type == "S" and enemy.type == "R") or  \
         (player.type == "P" and enemy.type == "S"):
+            enemy_win_sound.play()
             return "Enemy"
     
-    if player.type == "N":
-        return "Enemy"
-    
+    player_win_sound.play()
     return "Player"
   
 score = Score()
