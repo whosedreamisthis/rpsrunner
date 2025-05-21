@@ -4,16 +4,24 @@ from ground import Ground
 from player import Player
 
 pygame.init()
+pygame.font.init()
+
 
 def game():
     clock = pygame.time.Clock() 
-    screen = pygame.display.set_mode((700,250))
+    screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
     pygame.display.set_caption("Rock Paper Scissor Infinite Runner")
     ground = Ground()
     ground.draw(screen)
     ground.update()
     
-    player = Player()
+    try:
+        font = pygame.font.Font("freesansbold.ttf", 32) # Using a common free font
+    except FileNotFoundError:
+    # Fallback to default font if 'freesansbold.ttf' is not found
+        font = pygame.font.SysFont(None, 32)
+    
+    player = Player(font)
     player.update()
     player.draw(screen)
     

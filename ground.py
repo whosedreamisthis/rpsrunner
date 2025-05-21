@@ -13,6 +13,9 @@ class Ground():
         
         self.speed = 4
         
+    def get_ground_pos(self):
+        return (self.ground1_x,self.ground1_y)
+        
     def draw(self, screen):
         screen.blit(self.ground1, (self.ground1_x,self.ground1_y))
         screen.blit(self.ground2, (self.ground2_x,self.ground2_y))
