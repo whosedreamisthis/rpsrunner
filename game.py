@@ -8,6 +8,28 @@ pygame.init()
 pygame.font.init()
 
 
+def collide(player,enemiesManager):
+    enemy = enemiesManager.get_first_enemy()
+    if enemy.get_x_pos() <= 50:
+        return enemy 
+    
+    return None   
+
+def duel(player, enemy):
+    if player.type == enemy.type:
+        return "Tie"
+    
+    if (player.type == "R" and enemy.type == "P") or \
+        (player.type == "S" and enemy.type == "R") or  \
+        (player.type == "P" and enemy.type == "S"):
+            return "Enemy"
+    
+    if player.type == "N":
+        return "Enemy"
+    
+    return "Player"
+        
+    
 def game():
     clock = pygame.time.Clock() 
     screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
@@ -28,24 +50,45 @@ def game():
     player.update()
     player.draw(screen)
     
-    enemies_manager = EnemiesManager(ground_speed)
-    enemies_manager.spawn_enemy(font)
+    enemies_manager = EnemiesManager(ground_speed,font)
+    
     enemies_manager.update()
     enemies_manager.draw(screen)
+
     
     quit = False
-        
+    game_over = False
     while not quit:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 quit = True
+                
+        
         screen.fill((240,240,240))
-        ground.update()
+        
+        if (not game_over):
+            ground.update()
+            player.update()
+            enemies_manager.update()
+            
+            enemy = collide(player,enemies_manager)
+            if (enemy is not None):
+                print("player collided with enemy")
+                
+                
+                winner = duel(player,enemy)
+                if winner == "Enemy":
+                    game_over = True
+                    enemy.draw(screen)
+                else:
+                    enemies_manager.pop_first_enemy()
+                    del enemy
+                    
+                    
+                
         ground.draw(screen)
-        player.update()
         player.draw(screen)
-        enemies_manager.update()
-        enemies_manager.draw(screen)
+        enemies_manager.draw(screen)    
         pygame.display.update()
         # clock.tick(1) 
         clock.tick(60)
