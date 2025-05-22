@@ -1,35 +1,45 @@
 import pygame
 from consts import *
+
 import random
 class Enemy:
-    def __init__(self,font,enemy_type):
+    def __init__(self,font,enemy_type,rock_surface, paper_surface, scissors_surface):
+        Enemy.rock_surface = rock_surface
+        Enemy.paper_surface = paper_surface
+        Enemy.scissors_surface = scissors_surface
+        
         self.x = WINDOW_WIDTH
         self.y = GROUND_HEIGHT
         
         self.type = enemy_type
         if self.type == "R":
-            self.color = rock_color
+            self.image = Enemy.rock_surface
         elif self.type == "S":
-            self.color = scissors_color
+            self.image = Enemy.scissors_surface
         else:
-            self.color = paper_color
+            self.image = Enemy.paper_surface
             
-        self.text_surface = font.render(self.type, True, self.color) # Red text
+        original_width, original_height = self.image.get_size()
+        aspect_ratio = original_width / original_height
 
+        desired_new_width = 40
+        desired_new_height = int(desired_new_width / aspect_ratio) # Calculate height to maintain ratio
 
-        self.text_rect = self.text_surface.get_rect()
+        self.image = pygame.transform.scale(self.image, (desired_new_width, desired_new_height))
 
-        self.text_rect.center = (self.x,self.y)
+        self.image_rect = self.image.get_rect()
+        self.y  -= 10    
+        self.image_rect.center = (self.x,self.y - 100)
         
     def draw(self,screen):
-        screen.blit(self.text_surface, self.text_rect)
+        screen.blit(self.image, self.image_rect)
     
     def get_x_pos(self):
         return self.x
     
     def update(self,speed):
         self.x -= speed
-        self.text_rect.center = (self.x,self.y)
+        self.image_rect.center = (self.x,self.y)
 
         
         

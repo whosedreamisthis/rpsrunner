@@ -46,7 +46,10 @@ class EnemiesManager:
 
     def spawn_enemy(self):
         enemy_type = random.choice(ENEMY_TYPES)
-        new_enemy = Enemy(self.font, enemy_type)
+        new_enemy = Enemy(self.font, enemy_type, 
+                          EnemiesManager.rock_surface,
+                          EnemiesManager.paper_surface,
+                          EnemiesManager.scissors_surface)
         self.enemies.append(new_enemy)
         self.num_enemies_spawned = getattr(self, 'num_enemies_spawned', 0) + 1 # Initialize if not present
 

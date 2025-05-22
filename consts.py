@@ -14,7 +14,7 @@ ENEMY_TYPES = ["R","P","S"]
 
 SPEED_UPGRADE_FRAME = 1200
 
-god_mode = True
+god_mode = False
 
 BUTTON_COLOR_ROCK = (89,195,195) # Same as rock_color
 BUTTON_COLOR_PAPER = (119,76,96) # Same as paper_color
