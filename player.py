@@ -1,25 +1,27 @@
 import pygame
 import random
 from consts import *
-
 class Player:
     def __init__(self,font):
+        Player.rock_surface = pygame.image.load("assets/images/rock.png").convert_alpha()
+        Player.scissors_surface = pygame.image.load("assets/images/scissors.png").convert_alpha()
+        Player.paper_surface = pygame.image.load("assets/images/paper.png").convert_alpha()
+
         self.type = random.choice(ENEMY_TYPES)
-        # self.font = font
-        # self.text_surface = font.render(self.type, True, dark_gray) # Red text
-        self.load_image()
+        
+        self.set_image()
         self.image_rect = self.image.get_rect()
         self.image_rect.center =  (35,GROUND_HEIGHT - 10)
 
         
 
-    def load_image(self):
+    def set_image(self):
         if self.type == "R":
-            self.image = pygame.image.load("assets/images/rock.png").convert_alpha() # Use .convert_alpha() for transparency
+            self.image = Player.rock_surface
         elif self.type == "S":
-            self.image = pygame.image.load("assets/images/scissors.png").convert_alpha() # Use .convert_alpha() for transparency
+            self.image =  Player.scissors_surface
         else:    
-            self.image = pygame.image.load("assets/images/paper.png").convert_alpha() # Use .convert_alpha() for transparency
+            self.image =  Player.paper_surface
             
         original_width, original_height = self.image.get_size()
         aspect_ratio = original_width / original_height
@@ -42,7 +44,7 @@ class Player:
 
     def change(self,new_type):
         self.type = new_type
-        self.load_image()
+        self.set_image()
 
         
     

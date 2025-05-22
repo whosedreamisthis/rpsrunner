@@ -1,7 +1,7 @@
 from enemy import Enemy
 import random
 from consts import *
-
+import pygame
 # Define original spawn times in SECONDS
 # These are the times at the game's initial ground speed.
 # Let's adjust these to be more meaningful for initial speed.
@@ -9,7 +9,12 @@ original_min_spawn_duration = 3.0  # seconds
 original_max_spawn_duration = 6.0  # seconds
 
 class EnemiesManager:
+    
     def __init__(self, initial_speed, font):
+        EnemiesManager.rock_surface = pygame.image.load("assets/images/rock.png").convert_alpha()
+        EnemiesManager.scissors_surface = pygame.image.load("assets/images/scissors.png").convert_alpha()
+        EnemiesManager.paper_surface = pygame.image.load("assets/images/paper.png").convert_alpha()
+
         self.enemies = []
         self.font = font
 
