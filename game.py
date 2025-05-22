@@ -201,10 +201,12 @@ def game():
 
         ui_manager.update(time_delta)           
                 
-        ground.draw(screen)
         player.draw(screen)
         enemies_manager.draw(screen)    
+        ground.draw(screen)
         score.draw(screen)
+        
+
         ui_manager.draw_ui(screen)         
 
         pygame.display.flip()
