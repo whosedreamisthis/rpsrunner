@@ -5,8 +5,8 @@ import pygame
 # Define original spawn times in SECONDS
 # These are the times at the game's initial ground speed.
 # Let's adjust these to be more meaningful for initial speed.
-original_min_spawn_duration = 3.0  # seconds
-original_max_spawn_duration = 6.0  # seconds
+original_min_spawn_duration = 2.0  # seconds
+original_max_spawn_duration = 4.0  # seconds
 
 class EnemiesManager:
     
