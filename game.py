@@ -62,6 +62,7 @@ enemies_manager = EnemiesManager(ground_speed,font)
 def init_game_state():
     score.reset()    
     enemies_manager.reset()
+    ground.reset()
     set_rps_buttons_visibility(True)
     
 def set_rps_buttons_visibility(visible):
@@ -156,6 +157,7 @@ def game():
                 if event.ui_element == restart_button:
                     if game_over: # Ensure restart only happens if game is actually over
                         init_game_state()
+                        current_frame = 0
                         print("Game Restarted!")
                         game_over = False
                         restart_button.hide()

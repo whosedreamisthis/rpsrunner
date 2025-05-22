@@ -14,6 +14,8 @@ class Ground():
         
         self.speed = 2
         
+    def reset(self):
+        self.speed = 2
     def get_ground_pos(self):
         return (self.ground1_x,self.ground1_y)
         
